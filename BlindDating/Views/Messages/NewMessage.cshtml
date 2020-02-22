@@ -1,0 +1,29 @@
+﻿@model BlindDating.Models.MailMessage
+@{
+    Layout = "_Layout";
+}
+
+<div>
+    <form asp-action="Send">
+
+        <div class="form-group">
+            <label asp-for="MessageTitle" class="control-label"></label>
+            <input asp-for="MessageTitle" class="form-control" />
+            <span asp-validation-for="MessageTitle" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="MessageText" class="control-label"></label>
+            <input asp-for="MessageText" class="form-control" width="200" height="400"/>
+            <span asp-validation-for="MessageText" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="text" name="toProfileId" value="@ViewBag.ToProfileId" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Send Message" class="btn btn-default" />
+        </div>
+
+    </form>
+
+</div>

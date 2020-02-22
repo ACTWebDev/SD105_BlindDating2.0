@@ -7,7 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using BlindDating.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BlindDating.Controllers
 {
@@ -15,11 +18,13 @@ namespace BlindDating.Controllers
     {
         private readonly BlindDatingContext _context;
         private UserManager<IdentityUser> _userManager;
+        private IHostingEnvironment _webroot;
 
-        public DatingProfilesController(BlindDatingContext context, UserManager<IdentityUser> userManager )
+        public DatingProfilesController(BlindDatingContext context, UserManager<IdentityUser> userManager, IHostingEnvironment webroot )
         {
             _context = context;
             _userManager = userManager;
+            _webroot = webroot;
         }
 
         // GET: DatingProfiles
@@ -103,8 +108,25 @@ namespace BlindDating.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Age,Gender,Bio,UserAccountId")] DatingProfile datingProfile)
-        {
+        public async Task<IActionResult> Create([Bind("Id,FirstName,LastName,Age,Gender,Bio,UserAccountId, DisplayName")] DatingProfile datingProfile,
+            IFormFile FilePhoto)
+        { 
+
+            if (FilePhoto.Length > 0)
+            {
+
+                string photoPath = _webroot.WebRootPath + "\\userPhotos\\";
+                var fileName = Path.GetFileName(FilePhoto.FileName);
+
+            using (var stream = System.IO.File.Create(photoPath + fileName))
+            {
+                await FilePhoto.CopyToAsync(stream);
+                    datingProfile.PhotoPath = fileName;
+}
+            }
+
+
+        
             if (ModelState.IsValid)
             {
                 _context.Add(datingProfile);
@@ -136,7 +158,7 @@ namespace BlindDating.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Age,Gender,Bio,UserAccountId")] DatingProfile datingProfile)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Age,Gender,Bio,UserAccountId, DisplayName")] DatingProfile datingProfile)
         {
             if (id != datingProfile.Id)
             {

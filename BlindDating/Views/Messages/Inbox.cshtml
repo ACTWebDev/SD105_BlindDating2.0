@@ -1,0 +1,38 @@
+﻿@model BlindDating.ViewModels.InboxViewModel
+@{
+    Layout = "_Layout";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Subject
+            </th>
+            <th>
+                From
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+
+                @foreach (var item in @Model.mailMessages)
+                {
+                    <tr>
+                        <td>
+                         @item.MessageTitle;
+                        </td>
+                        <td>
+                            @Model.fromProfiles.FirstOrDefault(id => id.Id == item.FromProfileId).DisplayName
+                        </td>
+                        <td>
+                            <a asp-action="Read" asp-route-id="@item.Id">Read</a>
+                        </td>
+                    </tr>
+                }
+    </table>
+
+
+

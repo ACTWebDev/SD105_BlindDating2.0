@@ -7,6 +7,8 @@ namespace BlindDating.Models
     {
         public DatingProfile()
         {
+            MailMessageFromProfile = new HashSet<MailMessage>();
+            MailMessageToProfile = new HashSet<MailMessage>();
         }
 
         public int Id { get; set; }
@@ -16,6 +18,10 @@ namespace BlindDating.Models
         public string Gender { get; set; }
         public string Bio { get; set; }
         public string UserAccountId { get; set; }
+        public string DisplayName { get; set; }
+        public string PhotoPath { get; set; }
 
+        public ICollection<MailMessage> MailMessageFromProfile { get; set; }
+        public ICollection<MailMessage> MailMessageToProfile { get; set; }
     }
 }

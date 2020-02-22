@@ -27,7 +27,25 @@ body {
 #qrCode {
     margin: 15px;
 }
+.navbar {
+    background-color: #bf228c;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
 
+.navbar a {
+    color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    height: 60%;
+}
+}
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
     /* Hide captions */

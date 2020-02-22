@@ -12,16 +12,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.DisplayName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.DisplayName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Age)
@@ -45,4 +39,5 @@
 </div>
 <div>
     <a asp-action="Browse">Back to Browse</a>
+    <a asp-controller="Messages" asp-action="NewMessage" asp-route-id="@Model.Id">Send Message </a>
 </div>
